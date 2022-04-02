@@ -1,6 +1,7 @@
 package core.mvc;
 
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
 
 @WebServlet(name = "dispatcher", urlPatterns = "/", loadOnStartup = 1)
 public class DispatcherServlet extends HttpServlet {
@@ -22,6 +21,7 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+        // DispatcherServlet에 loadOnStartup으로 우선순위를 주고, 초기화 메소드를 시작한다.
         rm = new RequestMapping();
         rm.initMapping();
     }
@@ -31,6 +31,7 @@ public class DispatcherServlet extends HttpServlet {
         String requestUri = req.getRequestURI();
         logger.debug("Method : {}, Request URI : {}", req.getMethod(), requestUri);
 
+        // uri로 controller를 찾아오기 (그러므로 스프링에서는 매핑경로가 겹치면 오류가 나는 것)
         Controller controller = rm.findController(requestUri);
         try {
             String viewName = controller.execute(req, resp);

@@ -1,25 +1,18 @@
 package core.mvc;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import next.controller.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import next.controller.CreateUserController;
-import next.controller.HomeController;
-import next.controller.ListUserController;
-import next.controller.LoginController;
-import next.controller.LogoutController;
-import next.controller.ProfileController;
-import next.controller.UpdateFormUserController;
-import next.controller.UpdateUserController;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestMapping {
     private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
     private Map<String, Controller> mappings = new HashMap<>();
 
     void initMapping() {
+        // 매핑에 필요한 경로 및 서블릿(Controller)를 등록한다.
         mappings.put("/", new HomeController());
         mappings.put("/users/form", new ForwardController("/user/form.jsp"));
         mappings.put("/users/loginForm", new ForwardController("/user/login.jsp"));

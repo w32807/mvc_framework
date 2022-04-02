@@ -1,17 +1,16 @@
 package next.dao;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-
+import core.jdbc.ConnectionManager;
+import next.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import core.jdbc.ConnectionManager;
-import next.model.User;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class UserDaoTest {
     @Before
@@ -23,13 +22,13 @@ public class UserDaoTest {
 
     @Test
     public void crud() throws Exception {
-        User expected = new User("userId", "password", "name", "javajigi@email.com");
+        User expected = new User("w32807", "1234", "w32807", "w32807@google.com");
         UserDao userDao = new UserDao();
         userDao.insert(expected);
         User actual = userDao.findByUserId(expected.getUserId());
         assertEquals(expected, actual);
 
-        expected.update(new User("userId", "password2", "name2", "sanjigi@email.com"));
+        expected.update(new User("w32807", "12345", "modified", "w32807dd@google.com"));
         userDao.update(expected);
         actual = userDao.findByUserId(expected.getUserId());
         assertEquals(expected, actual);
